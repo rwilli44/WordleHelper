@@ -4,7 +4,31 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Wordle Helper</title>
-    <script src="./wordlehelper.js"></script>
+    <script src="./wordlehelper.js" type="module"></script>
   </head>
-  <body></body>
+  <body>
+    <form action="/">
+      <label for="incorrect_letters">
+        List all of the letters that you know are NOT in the word separated by a
+        comma. Ex: T, Q, U</label
+      >
+      <input type="text" name="eliminated_letters" /><br />
+      <label for="correct_position">
+        Which letters are in the correct position? Indicate the letter and the
+        position using the format LETTER:POSITION, LETTER: POSITION... Ex: A:3,
+        E:5 <br />
+        If a letter is in more than one position, list the letter multiple
+        times. Ex: E:2, E:4
+      </label>
+      <input type="text" name="correct_position" /> <br />
+      <label for="letters_wrong_place">
+        If you found some letters which are correct, but were not in the correct
+        position, indicate the letter and the position you already tried it in
+        (the incorrect position) using the same format as above. Ex: T:1, A:5
+      </label>
+      <input type="text" name="incorrect_position" /><br />
+      <button type="button" id="find_button">Find Words</button
+      ><button type="button" id="reset_button">Reset</button>
+    </form>
+  </body>
 </html>
