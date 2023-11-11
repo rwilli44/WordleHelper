@@ -35,23 +35,22 @@ function check_correct_pos(word, correct_list) {
     let correct_letter = correct_list[i][0];
     let letter_pos = parseInt(correct_list[i][1]) - 1;
     let word_letter = word[letter_pos];
-    console.log(correct_letter);
-    console.log(word_letter);
+
     if (correct_letter != word_letter) {
       return false;
     }
   }
-  console.log("match");
   return true;
 }
 
-function check_incorrect_pos(word, incorrect_dict) {
-  for (let key in incorrect_dict) {
-    let letter_pos = parseInt(incorrect_dict[key]) - 1;
+function check_incorrect_pos(word, incorrect_list) {
+  for (let i in incorrect_list) {
+    let incorrect_letter = incorrect_list[i][0];
+    let letter_pos = parseInt(incorrect_list[i][1]) - 1;
     let word_letter = word[letter_pos];
-    if (key == word_letter) {
+    if (incorrect_letter == word_letter) {
       return true;
-    } else if (!word.includes(key)) {
+    } else if (!word.includes(incorrect_letter)) {
       return true;
     }
   }

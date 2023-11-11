@@ -1,5 +1,7 @@
 "set strict";
 export const form = document.querySelector("form");
+export const guesses_section = document.querySelector("#guesses");
+export const num_guesses = document.querySelector("input[name='num_guesses']");
 export const eliminated_letters = document.querySelector(
   "input[name='eliminated_letters']"
 );

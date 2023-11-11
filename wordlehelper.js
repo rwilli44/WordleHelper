@@ -6,17 +6,64 @@ import {
   incorrect_position,
   find_button,
   reset_button,
-  word_list,
+  num_guesses,
+  guesses_section,
 } from "./modules/const.js";
 
 import { find_word } from "./modules/funcs.js";
 
-var list_elim_letters, list_correct_pos, list_incorrect_pos;
-var incorrect_dict = {};
+var list_elim_letters;
+var incorrect_list = [];
 var correct_list = [];
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
+});
+
+num_guesses.addEventListener("input", () => {
+  let number_guesses = parseInt(num_guesses.value);
+  let rows_to_add = "";
+  let j = 1;
+  for (const child of guesses_section.children) {
+    if (j <= number_guesses) {
+      child.style.display = "block";
+    } else {
+      child.style.display = "none";
+    }
+    j++;
+  }
+});
+
+guesses_section.addEventListener("click", function (event) {
+  // Get the target element that was clicked
+  var clickedElement = event.target;
+  if (clickedElement.localName == "p") {
+    console.log(clickedElement.style.backgroundColor);
+    let current_bgColor = clickedElement.style.backgroundColor;
+    if (current_bgColor == "yellow") {
+      clickedElement.style.backgroundColor = "lime";
+    } else if (current_bgColor == "lime") {
+      clickedElement.style.backgroundColor = "lightgrey";
+    } else if (current_bgColor == "" || current_bgColor == "lightgrey") {
+      clickedElement.style.backgroundColor = "yellow";
+    }
+  }
+});
+
+guesses_section.addEventListener("input", function (event) {
+  // Get the target element that was clicked
+  var inputElement = event.target;
+  let row = inputElement.parentElement;
+  if (inputElement.value.length == 5) {
+    let j = 0;
+    for (const child of row.children) {
+      if (child.localName == "p") {
+        console.log(inputElement.value[j]);
+        child.textContent = inputElement.value[j];
+        j++;
+      }
+    }
+  }
 });
 
 find_button.addEventListener("click", () => {
@@ -42,13 +89,14 @@ find_button.addEventListener("click", () => {
       var pair_info = pos_pairs[i];
       pair_info = pair_info.replaceAll(" ", "");
       pair_info = pair_info.split(":");
-      incorrect_dict[pair_info[0]] = pair_info[1];
+      incorrect_list.push(pair_info);
     }
   }
+
   let possible_words = find_word(
     list_elim_letters,
     correct_list,
-    incorrect_dict
+    incorrect_list
   );
   console.log(possible_words);
 });
