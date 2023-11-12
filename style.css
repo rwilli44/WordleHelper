@@ -1,12 +1,23 @@
+/* Typography */
 p {
   font-size: 1.2rem;
 }
+
 #results p {
   line-height: 1.5rem;
 }
+
+/* Heading */
+h1 {
+  text-align: center;
+}
+
+/* Introduction Paragraph */
 #introduction-p {
   display: block;
 }
+
+/* Letter Tiles */
 #guesses p {
   background-color: lightgrey;
   margin: 0 3px 0 3px;
@@ -18,16 +29,20 @@ p {
   font-size: 2em;
   text-align: center;
 }
+
+/* Guess Rows - First is Always Displayed Others Toggle*/
+#row-1 {
+  display: flex;
+}
+
 #row-2,
 #row-3,
 #row-4,
 #row-5 {
   display: none;
 }
-#row-1 {
-  display: flex;
-}
 
+/* Vertically Align Input Elements*/
 .guess-items {
   margin: auto 5px;
   padding-top: 10px;
@@ -35,10 +50,12 @@ p {
   padding-bottom: 10px;
 }
 
+/* Reveal Button Only Shows After Find Words Button is Clicked */
 #reveal-button {
   display: none;
 }
 
+/* Layout */
 .container {
   width: 100%;
   height: 100%;
@@ -52,15 +69,7 @@ p {
   margin: 0 auto;
 }
 
+/* Guess Rows Container Spacing */
 .guess-row {
   margin: 15px;
-  align-content: center;
-}
-
-h1 {
-  text-align: center;
-}
-
-label {
-  padding-bottom: 10px;
 }
