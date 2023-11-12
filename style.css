@@ -18,16 +18,20 @@ h1 {
 }
 
 /* Letter Tiles */
-#guesses p {
+.wordtiles p {
   background-color: lightgrey;
   margin: 0 3px 0 3px;
   padding: 0.75em 0em 0.75em 0em;
-  min-width: 2.5em;
+  min-width: 2em;
   max-width: 10%;
   max-height: 10%;
   display: inline-block;
   font-size: 2em;
   text-align: center;
+}
+.wordtiles {
+  height: 100%;
+  display: flex;
 }
 
 /* Guess Rows - First is Always Displayed Others Toggle*/
@@ -42,15 +46,35 @@ h1 {
   display: none;
 }
 
+.guess-row {
+  margin: 15px;
+  flex-wrap: wrap;
+}
+
+/* Inputs */
+input[type="number"] {
+  text-align: center;
+  width: 50px;
+}
+
+input[type="text"] {
+  width: 5rem;
+}
+
 /* Vertically Align Input Elements*/
 .guess-items {
-  margin: auto 5px;
+  margin: auto 20px;
   padding-top: 10px;
   display: block;
   padding-bottom: 10px;
 }
 
-/* Reveal Button Only Shows After Find Words Button is Clicked */
+/* Buttons */
+button {
+  padding: 0.5em;
+  margin: 0.5em;
+}
+
 #reveal-button {
   display: none;
 }
@@ -60,16 +84,23 @@ h1 {
   width: 100%;
   height: 100%;
   align-content: center;
-  margin: 50px;
+  margin-top: 5%;
 }
 
 .center {
   height: 100%;
-  width: 900px;
+  max-width: 900px;
   margin: 0 auto;
 }
 
-/* Guess Rows Container Spacing */
-.guess-row {
-  margin: 15px;
+/* Layout changes for screens tablet or larger  */
+@media (min-width: 768px) {
+  /* Displays input and letter tiles side by side */
+  .guess-row {
+    flex-wrap: nowrap;
+  }
+  /* Widens letter tiles */
+  .wordtiles p {
+    min-width: 2.5em;
+  }
 }
