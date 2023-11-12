@@ -43,15 +43,16 @@ num_of_guesses.addEventListener("input", () => {
   let j = 1;
 
   for (const child of guesses_section.children) {
-    console.log(child);
+    console.log();
     if (j <= number_guesses) {
       child.style.display = "flex";
     } else {
       child.style.display = "none";
+
       child.childNodes[2].value = "";
-      for (let p = 3; p <= 11; p += 2) {
-        child.childNodes[p].innerText = "";
-        child.childNodes[p].style.backgroundColor = "lightgrey";
+      for (let p = 1; p <= 9; p += 2) {
+        child.childNodes[3].childNodes[p].innerText = "";
+        child.childNodes[3].childNodes[p].style.backgroundColor = "lightgrey";
       }
     }
     j++;
@@ -90,10 +91,16 @@ guesses_section.addEventListener("input", function (event) {
   let row = inputElement.parentElement.parentElement;
   let alpha_regex = /^[a-zA-Z]+$/;
   if (!alpha_regex.test(inputElement.value)) {
-    return None;
+    for (const child of row.children) {
+      if (child.localName == "p") {
+        child.textContent = "";
+        child.style.backgroundColor = "lightgrey";
+        return null;
+      }
+    }
   }
   let j = 0;
-  for (const child of row.children) {
+  for (const child of row.childNodes[3].children) {
     if (child.localName == "p" && j < inputElement.value.length) {
       child.textContent = inputElement.value[j].toUpperCase();
       child.style.backgroundColor = "lightgrey";
@@ -119,10 +126,9 @@ find_button.addEventListener("click", () => {
   let p_colors = [];
   for (let i in valid_guess_rows) {
     let row = valid_guess_rows[i];
-    console.log(row);
     let word = row.childNodes[1].childNodes[2].value.toLowerCase();
-    for (let p = 3; p <= 11; p += 2) {
-      let bgColor = row.childNodes[p].style.backgroundColor;
+    for (let p = 1; p <= 9; p += 2) {
+      let bgColor = row.childNodes[3].childNodes[p].style.backgroundColor;
       if (bgColor) {
         p_colors.push(bgColor);
       } else {
@@ -145,16 +151,13 @@ find_button.addEventListener("click", () => {
     }
     p_colors = [];
   }
-  console.log(list_elim_letters, "\n", correct_list, "\n", incorrect_list);
 
-  console.log(list_elim_letters, "\n", correct_list, "\n", incorrect_list);
   let possible_words = find_word(
     list_elim_letters,
     correct_list,
     incorrect_list
   );
 
-  console.log("possible words", possible_words);
   insert_results(possible_words);
   list_elim_letters = [];
   correct_list = [];

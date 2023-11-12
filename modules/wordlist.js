@@ -1,3 +1,5 @@
+// Wordlist from : https://gist.github.com/cfreshman/a7b776506c73284511034e63af1017ee based on an NYT Wordlist which may be subject to change
+
 export const word_list = [
   "aback",
   "abase",

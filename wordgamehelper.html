@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Word Game Helper by Rachel Williams</title>
     <link rel="stylesheet" href="./style.css" />
-    <script src="./wordlehelper.js" type="module"></script>
+    <script src="./wordgamehelper.js" type="module"></script>
   </head>
   <body>
     <div class="container">
@@ -37,11 +37,13 @@
                     minlength="5"
                   />
                 </div>
-                <p class="pos-1"></p>
-                <p class="pos-2"></p>
-                <p class="pos-3"></p>
-                <p class="pos-4"></p>
-                <p class="pos-5"></p>
+                <div class="wordtiles">
+                  <p class="pos-1"></p>
+                  <p class="pos-2"></p>
+                  <p class="pos-3"></p>
+                  <p class="pos-4"></p>
+                  <p class="pos-5"></p>
+                </div>
               </div>
               <div id="row-2" class="guess-row">
                 <div class="guess-items">
@@ -53,11 +55,13 @@
                     minlength="5"
                   />
                 </div>
-                <p class="pos-1"></p>
-                <p class="pos-2"></p>
-                <p class="pos-3"></p>
-                <p class="pos-4"></p>
-                <p class="pos-5"></p>
+                <div class="wordtiles">
+                  <p class="pos-1"></p>
+                  <p class="pos-2"></p>
+                  <p class="pos-3"></p>
+                  <p class="pos-4"></p>
+                  <p class="pos-5"></p>
+                </div>
               </div>
               <div id="row-3" class="guess-row">
                 <div class="guess-items">
@@ -69,11 +73,13 @@
                     minlength="5"
                   />
                 </div>
-                <p class="pos-1"></p>
-                <p class="pos-2"></p>
-                <p class="pos-3"></p>
-                <p class="pos-4"></p>
-                <p class="pos-5"></p>
+                <div class="wordtiles">
+                  <p class="pos-1"></p>
+                  <p class="pos-2"></p>
+                  <p class="pos-3"></p>
+                  <p class="pos-4"></p>
+                  <p class="pos-5"></p>
+                </div>
               </div>
               <div id="row-4" class="guess-row">
                 <div class="guess-items">
@@ -85,11 +91,13 @@
                     minlength="5"
                   />
                 </div>
-                <p class="pos-1"></p>
-                <p class="pos-2"></p>
-                <p class="pos-3"></p>
-                <p class="pos-4"></p>
-                <p class="pos-5"></p>
+                <div class="wordtiles">
+                  <p class="pos-1"></p>
+                  <p class="pos-2"></p>
+                  <p class="pos-3"></p>
+                  <p class="pos-4"></p>
+                  <p class="pos-5"></p>
+                </div>
               </div>
               <div id="row-5" class="guess-row">
                 <div class="guess-items">
@@ -101,11 +109,13 @@
                     minlength="5"
                   />
                 </div>
-                <p class="pos-1"></p>
-                <p class="pos-2"></p>
-                <p class="pos-3"></p>
-                <p class="pos-4"></p>
-                <p class="pos-5"></p>
+                <div class="wordtiles">
+                  <p class="pos-1"></p>
+                  <p class="pos-2"></p>
+                  <p class="pos-3"></p>
+                  <p class="pos-4"></p>
+                  <p class="pos-5"></p>
+                </div>
               </div>
             </div>
           </div>
@@ -118,6 +128,16 @@
           <button id="reveal-button">Reveal Words</button>
           <p id="words_found"></p>
         </div>
+        <footer>
+          The wordlist used is based on
+          <a
+            href="https://gist.github.com/cfreshman/a7b776506c73284511034e63af1017ee"
+          >
+            this GitHub list</a
+          >
+          of words from the NYT, however there is no guarantee that it will
+          remain accurate. Past answers have not been removed.
+        </footer>
       </div>
     </div>
   </body>
