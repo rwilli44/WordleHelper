@@ -3,87 +3,121 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Wordle Helper</title>
+    <title>Word Game Helper by Rachel Williams</title>
     <link rel="stylesheet" href="./style.css" />
     <script src="./wordlehelper.js" type="module"></script>
   </head>
   <body>
-    <form action="/">
-      <div>
-        <label for="num_guesses">
-          How many words have you guessed already ?</label
-        >
-        <input type="number" name="num_guesses" max="5" min="1" /><br />
-        <div id="guesses">
-          <div id="row-1" class="guess-row">
-            <label for="guess-1">Enter Guess 1: </label
-            ><input name="guess-1" type="text" maxlength="5" minlength="5" />
-            <p class="pos-1"></p>
-            <p class="pos-2"></p>
-            <p class="pos-3"></p>
-            <p class="pos-4"></p>
-            <p class="pos-5"></p>
+    <div class="container">
+      <div class="center">
+        <h1>Word Game Helper</h1>
+        <p>
+          Curious about what other words you could have guessed on today's game?
+          Feeling stuck and wondering how many possible words are left?
+        </p>
+        <p>
+          Enter your guesses below and click on the squares to change their
+          color. When you have entered all of your guesses, click Find Words to
+          show how many words were found or choose to reveal the wordlist.
+        </p>
+        <form action="/">
+          <div>
+            <label for="num_guesses">
+              How many words have you guessed already ?</label
+            >
+            <input type="number" name="num_guesses" max="5" min="1" /><br />
+            <div id="guesses">
+              <div id="row-1" class="guess-row">
+                <div class="guess-items">
+                  <label for="guess-1">Enter Guess 1: </label
+                  ><input
+                    name="guess-1"
+                    type="text"
+                    maxlength="5"
+                    minlength="5"
+                  />
+                </div>
+                <p class="pos-1"></p>
+                <p class="pos-2"></p>
+                <p class="pos-3"></p>
+                <p class="pos-4"></p>
+                <p class="pos-5"></p>
+              </div>
+              <div id="row-2" class="guess-row">
+                <div class="guess-items">
+                  <label for="guess-2">Enter Guess 2: </label
+                  ><input
+                    name="guess-2"
+                    type="text"
+                    maxlength="5"
+                    minlength="5"
+                  />
+                </div>
+                <p class="pos-1"></p>
+                <p class="pos-2"></p>
+                <p class="pos-3"></p>
+                <p class="pos-4"></p>
+                <p class="pos-5"></p>
+              </div>
+              <div id="row-3" class="guess-row">
+                <div class="guess-items">
+                  <label for="guess-3">Enter Guess 3: </label
+                  ><input
+                    name="guess-3"
+                    type="text"
+                    maxlength="5"
+                    minlength="5"
+                  />
+                </div>
+                <p class="pos-1"></p>
+                <p class="pos-2"></p>
+                <p class="pos-3"></p>
+                <p class="pos-4"></p>
+                <p class="pos-5"></p>
+              </div>
+              <div id="row-4" class="guess-row">
+                <div class="guess-items">
+                  <label for="guess-4">Enter Guess 4: </label
+                  ><input
+                    name="guess-4"
+                    type="text"
+                    maxlength="5"
+                    minlength="5"
+                  />
+                </div>
+                <p class="pos-1"></p>
+                <p class="pos-2"></p>
+                <p class="pos-3"></p>
+                <p class="pos-4"></p>
+                <p class="pos-5"></p>
+              </div>
+              <div id="row-5" class="guess-row">
+                <div class="guess-items">
+                  <label for="guess-5">Enter Guess 5: </label
+                  ><input
+                    name="guess-5"
+                    type="text"
+                    maxlength="5"
+                    minlength="5"
+                  />
+                </div>
+                <p class="pos-1"></p>
+                <p class="pos-2"></p>
+                <p class="pos-3"></p>
+                <p class="pos-4"></p>
+                <p class="pos-5"></p>
+              </div>
+            </div>
           </div>
-          <div id="row-2" class="guess-row">
-            <label for="guess-2">Enter Guess 2: </label
-            ><input name="guess-2" type="text" maxlength="5" minlength="5" />
-            <p class="pos-1"></p>
-            <p class="pos-2"></p>
-            <p class="pos-3"></p>
-            <p class="pos-4"></p>
-            <p class="pos-5"></p>
-          </div>
-          <div id="row-3" class="guess-row">
-            <label for="guess-3">Enter Guess 3: </label
-            ><input name="guess-3" type="text" maxlength="5" minlength="5" />
-            <p class="pos-1"></p>
-            <p class="pos-2"></p>
-            <p class="pos-3"></p>
-            <p class="pos-4"></p>
-            <p class="pos-5"></p>
-          </div>
-          <div id="row-4" class="guess-row">
-            <label for="guess-4">Enter Guess 4: </label
-            ><input name="guess-4" type="text" maxlength="5" minlength="5" />
-            <p class="pos-1"></p>
-            <p class="pos-2"></p>
-            <p class="pos-3"></p>
-            <p class="pos-4"></p>
-            <p class="pos-5"></p>
-          </div>
-          <div id="row-5" class="guess-row">
-            <label for="guess-5">Enter Guess 5: </label
-            ><input name="guess-5" type="text" maxlength="5" minlength="5" />
-            <p class="pos-1"></p>
-            <p class="pos-2"></p>
-            <p class="pos-3"></p>
-            <p class="pos-4"></p>
-            <p class="pos-5"></p>
-          </div>
+          <button type="button" id="find_button">Find Words</button
+          ><button type="button" id="reset_button">Reset</button>
+        </form>
+        <div id="results">
+          <p id="number_found"></p>
+          <button id="reveal-button">Reveal Words</button>
+          <p id="words_found"></p>
         </div>
       </div>
-
-      <!-- <label for="incorrect_letters">
-        List all of the letters that you know are NOT in the word separated by a
-        comma. Ex: T, Q, U</label
-      >
-      <input type="text" name="eliminated_letters" /><br />
-      <label for="correct_position">
-        Which letters are in the correct position? Indicate the letter and the
-        position using the format LETTER:POSITION, LETTER: POSITION... Ex: A:3,
-        E:5 <br />
-        If a letter is in more than one position, list the letter multiple
-        times. Ex: E:2, E:4
-      </label>
-      <input type="text" name="correct_position" /> <br />
-      <label for="letters_wrong_place">
-        If you found some letters which are correct, but were not in the correct
-        position, indicate the letter and the position you already tried it in
-        (the incorrect position) using the same format as above. Ex: T:1, A:5
-      </label>
-      <input type="text" name="incorrect_position" /><br />-->
-      <button type="button" id="find_button">Find Words</button
-      ><button type="button" id="reset_button">Reset</button>
-    </form>
+    </div>
   </body>
 </html>

@@ -2,9 +2,9 @@
 export const form = document.querySelector("form");
 export const guesses_section = document.querySelector("#guesses");
 export const num_guesses = document.querySelector("input[name='num_guesses']");
-export const all_guesses = document.querySelectorAll(".guess-row");
+export const all_guess_rows = document.querySelectorAll(".guess-row");
 export const all_guess_inputs = document.querySelectorAll("input[type='text']");
-export const all_ps = document.querySelectorAll("p");
+export const letter_squares = document.querySelectorAll(".guess-row p");
 
 export const eliminated_letters = document.querySelector(
   "input[name='eliminated_letters']"
@@ -15,6 +15,9 @@ export const correct_position = document.querySelector(
 export const incorrect_position = document.querySelector(
   "input[name='incorrect_position']"
 );
+export const number_found_p = document.querySelector("#number_found");
+export const words_found_p = document.querySelector("#words_found");
+export const reveal_button = document.querySelector("#reveal-button");
 
 export const find_button = document.querySelector("#find_button");
 export const reset_button = document.querySelector("#reset_button");
