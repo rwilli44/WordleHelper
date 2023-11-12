@@ -1,5 +1,5 @@
 "set strict";
-import { word_list } from "./const.js";
+import { word_list } from "./wordlist.js";
 // import { word_list } from "./modules/list.js";
 
 export function find_word(list_elim_letters, correct_list, incorrect_dict) {
@@ -18,7 +18,6 @@ export function find_word(list_elim_letters, correct_list, incorrect_dict) {
       possible_words.push(word);
     }
   }
-  console.log("Words found: ", possible_words.length);
   return possible_words;
 }
 
