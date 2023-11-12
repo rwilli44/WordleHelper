@@ -1,5 +1,6 @@
 "set strict";
-import { letter_squares, word_list } from "./const.js";
+import { word_list } from "./const.js";
+// import { word_list } from "./modules/list.js";
 
 export function find_word(list_elim_letters, correct_list, incorrect_dict) {
   let possible_words = [];

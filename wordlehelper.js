@@ -3,7 +3,7 @@ import {
   form,
   find_button,
   reset_button,
-  num_guesses,
+  num_of_guesses,
   guesses_section,
   all_guess_rows,
   all_guess_inputs,
@@ -37,18 +37,19 @@ function reset_letter_squares() {
 }
 
 // ****************** Change the number of guesses ****************** //
-num_guesses.addEventListener("input", () => {
+num_of_guesses.addEventListener("input", () => {
   clear_results();
-  let number_guesses = parseInt(num_guesses.value);
+  let number_guesses = parseInt(num_of_guesses.value);
   let j = 1;
-  console.log(letter_squares);
+
   for (const child of guesses_section.children) {
+    console.log(child);
     if (j <= number_guesses) {
       child.style.display = "flex";
     } else {
       child.style.display = "none";
       child.childNodes[2].value = "";
-      for (let p = 4; p <= 12; p += 2) {
+      for (let p = 3; p <= 11; p += 2) {
         child.childNodes[p].innerText = "";
         child.childNodes[p].style.backgroundColor = "lightgrey";
       }
@@ -87,6 +88,10 @@ guesses_section.addEventListener("input", function (event) {
   // Get the target element that was clicked
   var inputElement = event.target;
   let row = inputElement.parentElement.parentElement;
+  let alpha_regex = /^[a-zA-Z]+$/;
+  if (!alpha_regex.test(inputElement.value)) {
+    return None;
+  }
   let j = 0;
   for (const child of row.children) {
     if (child.localName == "p" && j < inputElement.value.length) {
@@ -103,7 +108,7 @@ guesses_section.addEventListener("input", function (event) {
 // ****************** Find Possible Words ****************** //
 find_button.addEventListener("click", () => {
   let alpha_regex = /^[a-zA-Z]+$/;
-  let number_guesses = parseInt(num_guesses.value);
+  let number_guesses = parseInt(num_of_guesses.value);
   let valid_guess_rows = [];
   for (let i = 0; i < number_guesses; i++) {
     let guess = all_guess_rows[i].childNodes[1].childNodes[2].value;
@@ -187,7 +192,7 @@ reset_button.addEventListener("click", () => {
 
 window.onload = reset_input();
 function reset_input() {
-  num_guesses.value = 1;
+  num_of_guesses.value = 1;
   for (let i = 0; i < 5; i++) {
     all_guess_inputs[i].value = "";
   }

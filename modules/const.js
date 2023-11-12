@@ -1,113 +1,41 @@
 "set strict";
+
+// Form is needed to set onclick listener for changing tile colors
 export const form = document.querySelector("form");
+
+// This div contains all the rows of guesses
 export const guesses_section = document.querySelector("#guesses");
-export const num_guesses = document.querySelector("input[name='num_guesses']");
+
+// Number of gueses to enter determines the number of rows displayed
+export const num_of_guesses = document.querySelector(
+  "input[name='num_guesses']"
+);
+
+// Needed to enumerate all the rows of user input
 export const all_guess_rows = document.querySelectorAll(".guess-row");
+
+// Used for resetting all the input fields
 export const all_guess_inputs = document.querySelectorAll("input[type='text']");
+
+// Used for resetting color of all letter tiles
 export const letter_squares = document.querySelectorAll(".guess-row p");
 
-export const eliminated_letters = document.querySelector(
-  "input[name='eliminated_letters']"
-);
-export const correct_position = document.querySelector(
-  "input[name='correct_position']"
-);
-export const incorrect_position = document.querySelector(
-  "input[name='incorrect_position']"
-);
+// Used for displaying the number of words found
 export const number_found_p = document.querySelector("#number_found");
+
+// Used for displaying the words found
 export const words_found_p = document.querySelector("#words_found");
+
+// Button for finding possible words
+export const find_button = document.querySelector("#find_button");
+
+// Button for revealing the words
 export const reveal_button = document.querySelector("#reveal-button");
 
-export const find_button = document.querySelector("#find_button");
+// Button for resetting the page
 export const reset_button = document.querySelector("#reset_button");
 
 export const word_list = [
-  "aback",
-  "abase",
-  "abate",
-  "abbey",
-  "abbot",
-  "abhor",
-  "abide",
-  "abled",
-  "abode",
-  "abort",
-  "about",
-  "above",
-  "abuse",
-  "abyss",
-  "acorn",
-  "acrid",
-  "actor",
-  "acute",
-  "adage",
-  "adapt",
-  "adept",
-  "admin",
-  "admit",
-  "adobe",
-  "adopt",
-  "adore",
-  "adorn",
-  "adult",
-  "affix",
-  "afire",
-  "afoot",
-  "afoul",
-  "after",
-  "again",
-  "agape",
-  "agate",
-  "agent",
-  "agile",
-  "aging",
-  "aglow",
-  "agony",
-  "agora",
-  "agree",
-  "ahead",
-  "aider",
-  "aisle",
-  "alarm",
-  "album",
-  "alert",
-  "algae",
-  "alibi",
-  "alien",
-  "align",
-  "alike",
-  "alive",
-  "allay",
-  "alley",
-  "allot",
-  "allow",
-  "alloy",
-  "aloft",
-  "alone",
-  "along",
-  "aloof",
-  "aloud",
-  "alpha",
-  "altar",
-  "alter",
-  "amass",
-  "amaze",
-  "amber",
-  "amble",
-  "amend",
-  "amiss",
-  "amity",
-  "among",
-  "ample",
-  "amply",
-  "amuse",
-  "angel",
-  "anger",
-  "angle",
-  "angry",
-  "angst",
-  "anime",
   "ankle",
   "annex",
   "annoy",
