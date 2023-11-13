@@ -152,7 +152,6 @@ function check_min_uses(word, min_use_list) {
   }
 }
 function check_repeat_target(word, repeat_list) {
-  console.log(repeat_list);
   if (repeat_list.length == 0) {
     return true;
   }
@@ -219,7 +218,7 @@ export function set_repeat_limit(p_list, word) {
       list_min_uses.push([repeated_letter, allowed_count]);
     }
   }
-  return list_limits, list_min_uses;
+  return [list_limits, list_min_uses];
 }
 // If a word has eliminated letters, returns true and the word is rejected
 function check_eliminated(word, list_elim_letters) {

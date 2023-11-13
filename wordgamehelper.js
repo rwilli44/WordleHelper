@@ -84,15 +84,16 @@ find_button.addEventListener("click", () => {
     // Get a list of the colors of each letter tile
     let p_colors = get_tile_colors(row);
 
-    let guess_repeats,
-      guess_min_uses = set_repeat_limit(p_colors, word);
+    let repeat_lists = set_repeat_limit(p_colors, word);
+    let guess_repeats = repeat_lists[0];
+    let guess_min_uses = repeat_lists[1];
 
     if (guess_repeats) {
       repeat_targets.push(...guess_repeats);
+      console.log("target uses", guess_repeats);
     }
     if (guess_min_uses) {
       repeat_min_uses.push(...guess_min_uses);
-      console.log("minuses", repeat_min_uses);
     }
     // enumerate the color list to add the word letters to the correct list of letters
     // which are either eliminated, correct, or included but in the incorrect place
