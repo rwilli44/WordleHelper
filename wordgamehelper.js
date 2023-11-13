@@ -84,17 +84,21 @@ find_button.addEventListener("click", () => {
     // Get a list of the colors of each letter tile
     let p_colors = get_tile_colors(row);
 
+    // Check for letters that are repeated a minimum number of times or an exact number of times
     let repeat_lists = set_repeat_limit(p_colors, word);
     let guess_repeats = repeat_lists[0];
     let guess_min_uses = repeat_lists[1];
 
+    // Any letters repeated an exact number of times are added to the repeat_targets list
     if (guess_repeats) {
       repeat_targets.push(...guess_repeats);
-      console.log("target uses", guess_repeats);
     }
+
+    // Any letters repeated a minimum number of times are added to the repeat_min_uses list
     if (guess_min_uses) {
       repeat_min_uses.push(...guess_min_uses);
     }
+
     // enumerate the color list to add the word letters to the correct list of letters
     // which are either eliminated, correct, or included but in the incorrect place
     for (let i in p_colors) {
@@ -126,12 +130,7 @@ find_button.addEventListener("click", () => {
       delete updated_list_elim_letters[index_in_elimlist];
     }
   }
-  //// need to rethink this to have it signal any repeated numbers to limit how many times they are used
-  /// look for double letters in the word, if any are found check to see if any are grey, if they are count how many, set the
-  /// limit based on this, add a final filter to each word where in runs through a list of lists and checks if X letter is used Y or more times
-  /// use string.match() to count
 
-  console.log(repeat_targets);
   // Get possible word list
   possible_words = find_word(
     updated_list_elim_letters,
@@ -149,12 +148,12 @@ find_button.addEventListener("click", () => {
 reveal_button.addEventListener("click", () => {
   let result = ""; // to hold the complete result list as a string
 
-  // add each word tot he string
+  // Add each word to the string
   for (let word in possible_words) {
     result += possible_words[word] + ", ";
   }
 
-  // insert the string into the results section HTML cutting off the final comma
+  // Insert the string into the results section HTML cutting off the final comma
   words_found_p.innerText = result.substring(0, result.length - 2);
 });
 

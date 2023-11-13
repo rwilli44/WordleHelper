@@ -12,12 +12,13 @@ import {
 } from "./const.js";
 
 /*************************** Responding to Input ***************************/
-
+// Add or remove rows if user changes number of guesses
 export function show_rows(number_guesses) {
   for (let j = 0; j < number_guesses; j++) {
     all_guess_rows[j].style.display = "flex";
   }
 }
+// Respond to clicks to change the color of letter tiles
 export function change_color(clickedElement) {
   if (clickedElement.localName == "p" && clickedElement.innerText != "") {
     let current_bgColor = clickedElement.style.backgroundColor;
@@ -31,6 +32,7 @@ export function change_color(clickedElement) {
   }
 }
 
+// Respond to text input by showing letters in the tiles
 export function show_letters(row, inputElement) {
   let alpha_regex = /^[a-zA-Z]+$/;
   let letter_position = 0;
@@ -102,6 +104,71 @@ export function clear_results() {
 }
 
 /*************************** Finding Results ***************************/
+
+// Find repeated letters and add their number of uses to the list of minimum uses or
+// the list of exact numbers of uses if known. Returns a list of these two lists: [list_limits, list_min_uses]
+export function set_repeat_limit(p_list, word) {
+  let list_repeats = [];
+  let list_indexes = [];
+  let list_limits = [];
+  let list_min_uses = [];
+
+  // Loop through each letter in the word to count repeats
+  for (let letter = 0; letter < word.length; letter++) {
+    let re = new RegExp(word[letter], "g");
+    let count = word.match(re).length;
+
+    // If the letter is repeated, add it to the list of repeats avoiding duplicates
+    if (count > 1) {
+      let list_repeats_string = list_repeats.toString();
+      let repeat_letter_string = [word[letter], count].toString();
+      if (list_repeats_string.indexOf(repeat_letter_string) < 0) {
+        list_repeats.push([word[letter], count]);
+      }
+    }
+  }
+
+  // Create a list of repeated letter positions to check if they are eliminated
+  // or in the correct/incorrect position
+  for (let i in list_repeats) {
+    let indexes = [];
+    let letter = list_repeats[i][0];
+    for (let j = 0; j < word.length; j++) {
+      if (letter === word[j]) {
+        indexes.push(j);
+      }
+    }
+    list_indexes.push([letter, indexes]);
+  }
+
+  // Loop through the indexes of each repeated letter and use the tile color list to determin the min or taget number of uses
+  for (let i in list_indexes) {
+    let allowed_count = 0;
+    let repeated_letter = list_indexes[i][0];
+    let has_grey_tile = false; // if one of the tiles is grey, we can establish the target number of uses
+
+    // For each index position of the letter, verify the tile color
+    for (let j in list_indexes[i][1]) {
+      let letter_pos = list_indexes[i][1][j];
+      if (p_list[letter_pos] === "lime" || p_list[letter_pos] === "yellow") {
+        allowed_count++; // add to min/target number of uses
+      } else {
+        has_grey_tile = true;
+      }
+    }
+
+    if (has_grey_tile) {
+      // if a tile is grey, we have the exact number of reepats
+      list_limits.push([repeated_letter, allowed_count]);
+    } else {
+      // otherwise we havea  minimum number of repeats
+      list_min_uses.push([repeated_letter, allowed_count]);
+    }
+  }
+  return [list_limits, list_min_uses];
+}
+
+// Returns a list of all possible words
 export function find_word(
   list_elim_letters,
   correct_list,
@@ -110,6 +177,8 @@ export function find_word(
   repeat_min_uses
 ) {
   let possible_words = [];
+
+  // Run verifications for each word in the possible wordlist
   for (let i in word_list) {
     let word = word_list[i];
     let has_eliminated_letters = check_eliminated(word, list_elim_letters);
@@ -119,7 +188,7 @@ export function find_word(
     let has_min_uses = check_min_uses(word, repeat_min_uses);
 
     if (
-      // if the word passes these 3 tests it is added to the list of possible words
+      // if the word passes these 5 tests it is added to the list of possible words
       !has_eliminated_letters &&
       correct_letters_in_place &&
       !letters_in_incorrect_place &&
@@ -131,30 +200,41 @@ export function find_word(
   }
   return possible_words;
 }
+
+// Check that a letter known to be repeated is used the minimum number of times
 function check_min_uses(word, min_use_list) {
+  // If the exact number of uses is know, the min_use_list will be empty
   if (min_use_list.length == 0) {
     return true;
   }
+
+  // Loop through list in case of multiple repeatted letters
   for (let i in min_use_list) {
     let use_count = 0;
     let letter = min_use_list[i][0];
     let min_uses = min_use_list[i][1];
     let re = new RegExp(letter, "g");
-    let uses = word.match(re);
+    let uses = word.match(re); // Returns a list of all uses of the letter
     if (uses) {
+      // Avoids raising an error if uses = none
       use_count = uses.length;
     }
     if (use_count >= min_uses) {
+      // If minimum number of uses is met
       return true;
     } else {
       return false;
     }
   }
 }
+
+// Check for a repeated letter to be used an exact number of times if an exact number is known
 function check_repeat_target(word, repeat_list) {
+  // If an exact number of uses is not known, repeat_list is empty
   if (repeat_list.length == 0) {
     return true;
   }
+  // Loop through list in case of multiple repeated letters
   for (let i in repeat_list) {
     let use_count = 0;
     let letter = repeat_list[i][0];
@@ -162,6 +242,7 @@ function check_repeat_target(word, repeat_list) {
     let re = new RegExp(letter, "g");
     let uses = word.match(re);
     if (uses) {
+      // Avoids raising an error if uses = none
       use_count = uses.length;
     }
     if (use_count != target) {
@@ -172,54 +253,6 @@ function check_repeat_target(word, repeat_list) {
   }
 }
 
-export function set_repeat_limit(p_list, word) {
-  let list_repeats = [];
-  let list_indexes = [];
-  let list_limits = [];
-  let list_min_uses = [];
-  for (let letter = 0; letter < word.length; letter++) {
-    let re = new RegExp(word[letter], "g");
-    let count = word.match(re).length;
-
-    if (count > 1) {
-      let list_repeats_string = list_repeats.toString();
-      let repeat_letter_string = [word[letter], count].toString();
-      if (list_repeats_string.indexOf(repeat_letter_string) < 0) {
-        list_repeats.push([word[letter], count]);
-      }
-    }
-  }
-  for (let i in list_repeats) {
-    let indexes = [];
-    let letter = list_repeats[i][0];
-    for (let j = 0; j < word.length; j++) {
-      if (letter === word[j]) {
-        indexes.push(j);
-      }
-    }
-    list_indexes.push([letter, indexes]);
-  }
-  for (let i in list_indexes) {
-    let allowed_count = 0;
-    let has_grey_tile = false;
-    for (let j in list_indexes[i][1]) {
-      let letter_pos = list_indexes[i][1][j];
-      if (p_list[letter_pos] === "lime" || p_list[letter_pos] === "yellow") {
-        allowed_count++;
-      } else {
-        has_grey_tile = true;
-      }
-    }
-    let repeated_letter = list_indexes[i][0];
-    //checks that there is at least one use of the letter which is not allowed, otherwise we don't know if we've reached the limit
-    if (has_grey_tile) {
-      list_limits.push([repeated_letter, allowed_count]);
-    } else {
-      list_min_uses.push([repeated_letter, allowed_count]);
-    }
-  }
-  return [list_limits, list_min_uses];
-}
 // If a word has eliminated letters, returns true and the word is rejected
 function check_eliminated(word, list_elim_letters) {
   for (let letter in list_elim_letters) {
