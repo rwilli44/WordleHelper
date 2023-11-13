@@ -22,6 +22,7 @@ import {
   change_color,
   show_letters,
   get_tile_colors,
+  set_repeat_limit,
 } from "./modules/funcs.js";
 
 // ********* Variables necessary for storing the letters and results ********* //
@@ -29,6 +30,8 @@ let list_elim_letters = [];
 let incorrect_list = [];
 let correct_list = [];
 let possible_words = [];
+let repeat_targets = [];
+let repeat_min_uses = [];
 
 // ****************** Listener for Changing Number of Guess Rows  ****************** //
 num_of_guesses.addEventListener("input", () => {
@@ -65,6 +68,8 @@ find_button.addEventListener("click", () => {
   list_elim_letters = [];
   correct_list = [];
   incorrect_list = [];
+  repeat_targets = [];
+  repeat_min_uses = [];
 
   // verify the number of guesses selected to create a list of rows with valid input
   let number_guesses = parseInt(num_of_guesses.value);
@@ -79,6 +84,16 @@ find_button.addEventListener("click", () => {
     // Get a list of the colors of each letter tile
     let p_colors = get_tile_colors(row);
 
+    let guess_repeats,
+      guess_min_uses = set_repeat_limit(p_colors, word);
+
+    if (guess_repeats) {
+      repeat_targets.push(...guess_repeats);
+    }
+    if (guess_min_uses) {
+      repeat_min_uses.push(...guess_min_uses);
+      console.log("minuses", repeat_min_uses);
+    }
     // enumerate the color list to add the word letters to the correct list of letters
     // which are either eliminated, correct, or included but in the incorrect place
     for (let i in p_colors) {
@@ -115,11 +130,14 @@ find_button.addEventListener("click", () => {
   /// limit based on this, add a final filter to each word where in runs through a list of lists and checks if X letter is used Y or more times
   /// use string.match() to count
 
+  console.log(repeat_targets);
   // Get possible word list
   possible_words = find_word(
     updated_list_elim_letters,
     correct_list,
-    incorrect_list
+    incorrect_list,
+    repeat_targets,
+    repeat_min_uses
   );
 
   // Show the number of possible words and the button to reveal them

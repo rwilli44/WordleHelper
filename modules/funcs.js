@@ -102,29 +102,128 @@ export function clear_results() {
 }
 
 /*************************** Finding Results ***************************/
-export function find_word(list_elim_letters, correct_list, incorrect_dict) {
+export function find_word(
+  list_elim_letters,
+  correct_list,
+  incorrect_dict,
+  repeat_limits,
+  repeat_min_uses
+) {
   let possible_words = [];
-  for (var i in word_list) {
-    var word = word_list[i];
-    var has_eliminated_letters = check_eliminated(word, list_elim_letters);
-    var correct_letters_in_place = check_correct_pos(word, correct_list);
-    var letters_in_incorrect_place = check_incorrect_pos(word, incorrect_dict);
+  for (let i in word_list) {
+    let word = word_list[i];
+    let has_eliminated_letters = check_eliminated(word, list_elim_letters);
+    let correct_letters_in_place = check_correct_pos(word, correct_list);
+    let letters_in_incorrect_place = check_incorrect_pos(word, incorrect_dict);
+    let repeats_on_target = check_repeat_target(word, repeat_limits);
+    let has_min_uses = check_min_uses(word, repeat_min_uses);
 
     if (
       // if the word passes these 3 tests it is added to the list of possible words
       !has_eliminated_letters &&
       correct_letters_in_place &&
-      !letters_in_incorrect_place
+      !letters_in_incorrect_place &&
+      repeats_on_target &&
+      has_min_uses
     ) {
       possible_words.push(word);
     }
   }
   return possible_words;
 }
+function check_min_uses(word, min_use_list) {
+  if (min_use_list.length == 0) {
+    return true;
+  }
+  for (let i in min_use_list) {
+    let use_count = 0;
+    let letter = min_use_list[i][0];
+    let min_uses = min_use_list[i][1];
+    let re = new RegExp(letter, "g");
+    let uses = word.match(re);
+    if (uses) {
+      use_count = uses.length;
+    }
+    if (use_count >= min_uses) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
+function check_repeat_target(word, repeat_list) {
+  console.log(repeat_list);
+  if (repeat_list.length == 0) {
+    return true;
+  }
+  for (let i in repeat_list) {
+    let use_count = 0;
+    let letter = repeat_list[i][0];
+    let target = repeat_list[i][1];
+    let re = new RegExp(letter, "g");
+    let uses = word.match(re);
+    if (uses) {
+      use_count = uses.length;
+    }
+    if (use_count != target) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+}
 
+export function set_repeat_limit(p_list, word) {
+  let list_repeats = [];
+  let list_indexes = [];
+  let list_limits = [];
+  let list_min_uses = [];
+  for (let letter = 0; letter < word.length; letter++) {
+    let re = new RegExp(word[letter], "g");
+    let count = word.match(re).length;
+
+    if (count > 1) {
+      let list_repeats_string = list_repeats.toString();
+      let repeat_letter_string = [word[letter], count].toString();
+      if (list_repeats_string.indexOf(repeat_letter_string) < 0) {
+        list_repeats.push([word[letter], count]);
+      }
+    }
+  }
+  for (let i in list_repeats) {
+    let indexes = [];
+    let letter = list_repeats[i][0];
+    for (let j = 0; j < word.length; j++) {
+      if (letter === word[j]) {
+        indexes.push(j);
+      }
+    }
+    list_indexes.push([letter, indexes]);
+  }
+  for (let i in list_indexes) {
+    let allowed_count = 0;
+    let has_grey_tile = false;
+    for (let j in list_indexes[i][1]) {
+      let letter_pos = list_indexes[i][1][j];
+      if (p_list[letter_pos] === "lime" || p_list[letter_pos] === "yellow") {
+        allowed_count++;
+      } else {
+        has_grey_tile = true;
+      }
+    }
+    let repeated_letter = list_indexes[i][0];
+    //checks that there is at least one use of the letter which is not allowed, otherwise we don't know if we've reached the limit
+    if (has_grey_tile) {
+      list_limits.push([repeated_letter, allowed_count]);
+    } else {
+      list_min_uses.push([repeated_letter, allowed_count]);
+    }
+  }
+  return list_limits, list_min_uses;
+}
 // If a word has eliminated letters, returns true and the word is rejected
 function check_eliminated(word, list_elim_letters) {
-  for (var letter in list_elim_letters) {
+  for (let letter in list_elim_letters) {
     if (word.includes(list_elim_letters[letter])) {
       return true;
     }
