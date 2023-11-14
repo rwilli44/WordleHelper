@@ -331,6 +331,10 @@ export function get_valid_rows(number_guesses) {
 /*************************** Displaying Results ***************************/
 // Show the number of possible words
 export function insert_results_summary(words_found) {
-  number_found_p.innerText = `${words_found.length} words were found. Would you like to reveal them ?`;
-  reveal_button.style.display = "block";
+  if (words_found.length > 0) {
+    number_found_p.innerText = `${words_found.length} words were found. Would you like to reveal them ?`;
+    reveal_button.style.display = "block";
+  } else {
+    number_found_p.innerText = `Sorry, no matching words were found. Please check that your input is correct and try again!`;
+  }
 }
